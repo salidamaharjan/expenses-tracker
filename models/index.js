@@ -1,3 +1,8 @@
 const Categories = require('./Categories');
+const Transactions = require('./Transactions');
 
-module.exports = { Categories };
+Transactions.belongsTo(Categories);
+
+Categories.hasMany(Transactions);
+
+module.exports = { Categories, Transactions };
