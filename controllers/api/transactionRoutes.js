@@ -77,6 +77,13 @@ router.put('/:id', isAuthorized, async (req, res) => {
 // delete a specific transaction
 router.delete('/:id', isAuthorized, async (req, res) => {
   try {
+    await Transactions.destroy({
+      where: {
+        id: req.params.id,
+        personId: req.session.personId,
+      },
+    });
+    res.status(200).end();
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
