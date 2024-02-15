@@ -8,4 +8,6 @@ Categories.hasMany(Transactions);
 
 Person.hasMany(Transactions);
 
+Transactions.belongsTo(Person);
+
 module.exports = { Categories, Transactions, Person };
