@@ -11,7 +11,8 @@ const categoryData = [
 
 const seedCategories = async () => {
     try {
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: true }); 
+        // code above drops & recreates tables, it can be deleted if that isnt wanted.
         await Categories.bulkCreate(categoryData, { validate: true });
         console.log('Categories have been seeded!');
 
@@ -20,4 +21,6 @@ const seedCategories = async () => {
     }
 };
 
+
 seedCategories();
+
