@@ -9,9 +9,9 @@ const { sign } = require('crypto');
 router.get('/', isAuthorized, async (req, res) => {
   try {
     const allTransaction = await Transactions.findAll({
-        where: {
-            personId: req.session.personId,
-        },
+      where: {
+        personId: req.session.personId,
+      },
     });
     res.status(200).json(allTransaction);
   } catch (error) {
@@ -32,15 +32,15 @@ router.get('/', isAuthorized, async (req, res) => {
 //   }
 router.post('/', isAuthorized, async (req, res) => {
   try {
-    console.log("personId in session",req.session.personId);
+    console.log('personId in session', req.session.personId);
     const newTransaction = await Transactions.create({
-        transactionType: req.body.transactionType,
-        name: req.body.name,
-        description: req.body.description,
-        amount: req.body.amount,
-        date: req.body.date,
-        categoryId: 1,
-        personId: req.session.personId,
+      transactionType: req.body.transactionType,
+      name: req.body.name,
+      description: req.body.description,
+      amount: req.body.amount,
+      date: req.body.date,
+      categoryId: 1,
+      personId: req.session.personId,
     });
     res.status(200).json(newTransaction);
   } catch (error) {
@@ -48,9 +48,27 @@ router.post('/', isAuthorized, async (req, res) => {
     res.status(500).json(error);
   }
 });
+
 // edit a specific transaction
 router.put('/:id', isAuthorized, async (req, res) => {
   try {
+    const updateTransaction = await Transactions.update(
+      {
+        transactionType: req.body.transactionType,
+        name: req.body.name,
+        description: req.body.description,
+        amount: req.body.amount,
+        date: req.body.date,
+        categoryId: req.body.categoryId,
+      },
+      {
+        where: {
+          id: req.params.id,
+          personId: req.session.personId,
+        },
+      }
+    );
+    res.status(200).json(updateTransaction);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
