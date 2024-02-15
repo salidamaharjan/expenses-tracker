@@ -21,5 +21,6 @@ const seedCategories = async () => {
     }
 };
 
+
 seedCategories();
 
