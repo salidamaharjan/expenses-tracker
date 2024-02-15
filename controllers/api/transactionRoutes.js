@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
 const { Categories, Transactions, Person } = require('../../models');
-const { sign } = require('crypto');
 
 // the 'api/transactions' endpoint
 
