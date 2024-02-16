@@ -18,7 +18,7 @@
                     <a href="/">Expenses Tracker</a>
                 </h1>
                 <nav>
-                    {{#if logged_in}}
+                    {{#if loggedIn}}
                     <a href="/profile">profile</a>
                     <button class="no-button" id="logout">logout</button>
                     {{else}}
@@ -32,7 +32,7 @@
             {{!-- <footer></footer> --}}
         </div>
 
-        {{#if logged_in}}
+        {{#if loggedIn}}
         <script src="/js/logout.js"></script>
         {{/if}}
     </body>
