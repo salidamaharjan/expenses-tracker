@@ -13,8 +13,11 @@ router.post('/', async (req, res) => {
 
         req.session.save(() => {
             req.session.loggedIn = true;
+            req.session.personId = newPerson.id;
+            console.log("personId in session", req.session.personId);
             res.json(newPerson);
-        })
+        });
+
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
