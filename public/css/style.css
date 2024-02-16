@@ -1,0 +1,15 @@
+header {
+    padding-top: 40px;
+    padding-right: 50px;
+    padding-bottom: 40px;
+    padding-left: 50px;
+    background-color: #1e2c35;
+    color: white;
+}
+
+a {
+    padding: 5px 15px;
+    border: 1px solid white;
+    border-radius: 1px;
+    font-size: 20px;
+}
