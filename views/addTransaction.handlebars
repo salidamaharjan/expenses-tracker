@@ -1,0 +1,66 @@
+<div class="d-flex align-items-center justify-content-center">
+  <div class="create-post-card card mt-5 w-75">
+    <div class="card-body">
+      <h2 class="addTransaction">Add New Transaction</h2>
+      <form class="addTransaction-form">
+        <div class="mb-3">
+          <label for="transactionType" class="form-label">Select Transaction Type</label>
+          <select
+            class="form-control"
+            id="transactionType"
+            aria-describedby="transactionType"
+          >
+            <option value="debit" id="debit">Debit</option>
+            <option value="credit" id="credit">Credit</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="transactionName" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="transactionName"
+            aria-describedby="transactionName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount</label>
+          <input
+            type="text"
+            class="form-control"
+            id="amount"
+            aria-describedby="amount"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="transactionDate" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="transactionDate"
+            aria-describedby="transactionDate"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="transactionCategory" class="form-label">Select Category</label>
+          <select
+            class="form-control"
+            id="transactionCategory"
+            aria-describedby="transactionCategory"
+          >
+            <option value="food">Food</option>
+            <option value="housing&utilities">Housing & Utilities</option>
+            <option value="transportation">Transportation</option>
+            <option value="clothing">Clothing</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button id="btn-create" class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
