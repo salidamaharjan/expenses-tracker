@@ -27,11 +27,11 @@ const sess = {
 };
 
 app.use(session(sess));
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('view engine', 'handlebars');
 app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(router);
 
