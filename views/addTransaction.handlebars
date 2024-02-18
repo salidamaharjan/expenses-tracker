@@ -52,11 +52,9 @@
             id="transactionCategory"
             aria-describedby="transactionCategory"
           >
-            <option value="food">Food</option>
-            <option value="housing&utilities">Housing & Utilities</option>
-            <option value="transportation">Transportation</option>
-            <option value="clothing">Clothing</option>
-            <option value="other">Other</option>
+            {{#each categories as |category|}}
+            <option value="{{category.id}}">{{category.name}}</option>
+            {{/each}}
           </select>
         </div>
         <button id="btn-create" class="btn btn-primary">Create</button>
