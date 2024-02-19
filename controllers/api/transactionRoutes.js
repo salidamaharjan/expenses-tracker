@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
-const { Transactions } = require('../../models');
+const { Transactions, Categories } = require('../../models');
+const sequelize = require('../../config/connection');
 
 // the 'api/transactions' endpoint
 
@@ -13,6 +14,32 @@ router.get('/', isAuthorized, async (req, res) => {
       },
     });
     res.status(200).json(allTransaction);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+//get group by category transaction
+router.get('/grouped-transactions', isAuthorized, async (req, res) => {
+  try {
+    const groupedTransactions = await Transactions.findAll({
+      where: {
+        personId: req.session.personId,
+      },
+      attributes: [
+        'category_id',
+        [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
+      ],
+      include: [
+        {
+          model: Categories,
+          attributes: ['name'],
+        },
+      ],
+      group: ['category_id'],
+    });
+    res.status(200).json(groupedTransactions);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
