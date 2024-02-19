@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
-const { Categories, Transactions, Person } = require('../../models');
+const { Transactions } = require('../../models');
 
 // the 'api/transactions' endpoint
 
@@ -38,7 +38,7 @@ router.post('/', isAuthorized, async (req, res) => {
       description: req.body.description,
       amount: req.body.amount,
       date: req.body.date,
-      categoryId: 1,
+      categoryId: req.body.categoryId,
       personId: req.session.personId,
     });
     res.status(200).json(newTransaction);
