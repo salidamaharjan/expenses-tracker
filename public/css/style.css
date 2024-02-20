@@ -4,12 +4,20 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #1e2c35;
+}
+
 header {
     padding: 40px 50px;
     background-color: #1e2c35;
-    color: white;
 }
 
 a {
     padding: 5px 15px;
+}
+
+main {
+    padding: 50px;
+    background-color: #1e2c35;
 }
