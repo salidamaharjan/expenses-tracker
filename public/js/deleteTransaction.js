@@ -1,5 +1,5 @@
 (() => {
-  const deleteBtn = document.querySelectorAll('#btn-delete');
+  const deleteBtn = document.querySelectorAll('.btn-delete');
 
   deleteBtn.forEach((button) => {
     button.addEventListener('click', async (event) => {
