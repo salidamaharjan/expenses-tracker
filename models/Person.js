@@ -28,6 +28,10 @@ Person.init(
         len: [8, 24],
       },
     },
+    chartOptions: {
+      type: DataTypes.ENUM('Categories','Name','Individual'),
+      defaultValue: 'Categories',
+    },
   },
   {
     hooks: {
