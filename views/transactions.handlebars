@@ -10,10 +10,11 @@
         <span class='transaction-description'>{{this.description}}</span>
         <span class='transaction-amount'>${{this.amount}}</span>
         <span class='transaction-date'>{{this.date}}</span>
-        <button
+        <a
+          href='/transactions/{{this.id}}/edit'
           class='btn btn-edit btn-secondary'
           data-transaction-id='{{this.id}}'
-        >Edit</button>
+        >Edit</a>
         <button
           class='btn btn-delete btn-danger'
           data-transaction-id='{{this.id}}'
@@ -28,4 +29,3 @@
 
 <a href='/' class='back-button'>Back to Home!</a>
 <script src='/js/deleteTransaction.js'></script>
-<script src='/js/editTransaction.js'></script>

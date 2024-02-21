@@ -1,0 +1,69 @@
+<div class='d-flex align-items-center justify-content-center'>
+  <div class='create-post-card card mt-5 w-75'>
+    <div class='card-body'>
+      <h2 class='addTransaction'>Edit Transaction</h2>
+      <form class='addTransaction-form'>
+        <div class='mb-3'>
+          <label for='transactionType' class='form-label'>Select Transaction
+            Type</label>
+          <select
+            class='form-control'
+            id='transactionType'
+            aria-describedby='transactionType'
+          >
+            <option value='debit' id='debit'>Debit</option>
+            <option value='credit' id='credit'>Credit</option>
+          </select>
+        </div>
+        <div class='mb-3'>
+          <label for='transactionName' class='form-label'>Name</label>
+          <input
+            type='text'
+            class='form-control'
+            id='transactionName'
+            aria-describedby='transactionName'
+            value='{{transaction.name}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='description' class='form-label'>Description</label>
+          <textarea class='form-control' id='description'>
+            {{transaction.description}}
+          </textarea>
+        </div>
+        <div class='mb-3'>
+          <label for='amount' class='form-label'>Amount</label>
+          <input
+            type='text'
+            class='form-control'
+            id='amount'
+            aria-describedby='amount'
+            value='{{transaction.amount}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='transactionDate' class='form-label'>Date</label>
+          <input
+            type='date'
+            class='form-control'
+            id='transactionDate'
+            aria-describedby='transactionDate'
+            value='{{transaction.date}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='transactionCategory' class='form-label'>Select Category</label>
+          <select
+            class='form-control'
+            id='transactionCategory'
+            aria-describedby='transactionCategory'
+          >
+              <option value='{{transaction.category.id}}'>{{transaction.category.name}}</option>
+          </select>
+        </div>
+        <button id='btn-Update' class='btn btn-primary'>Update</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/js/editTransaction.js"></script>
