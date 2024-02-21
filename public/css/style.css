@@ -1,15 +1,23 @@
-header {
-    padding-top: 40px;
-    padding-right: 50px;
-    padding-bottom: 40px;
-    padding-left: 50px;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
     background-color: #1e2c35;
-    color: white;
+}
+
+header {
+    padding: 40px 50px;
+    background-color: #1e2c35;
 }
 
 a {
     padding: 5px 15px;
-    border: 1px solid white;
-    border-radius: 1px;
-    font-size: 20px;
+}
+
+main {
+    padding: 50px;
+    background-color: #1e2c35;
 }
