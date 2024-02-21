@@ -25,22 +25,18 @@ router.get('/:id/edit', isAuthorized, async (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [
-        {
-          model: Person,
-          attributes: ['id', 'username'],
-        },
-        {
-          model: Categories
-        },
-      ],
     });
+    const allCategories = await Categories.findAll();
+    const categories = allCategories.map((category) =>
+      category.get({ plain: true })
+    );
     const transaction = transactionWithId.get({ plain: true });
     console.log('transaction-->', transaction);
     res.render('editTransaction', {
       username: req.session.username,
       loggedIn: req.session.loggedIn,
       transaction: transaction,
+      categories: categories,
     });
   } catch (error) {
     console.log(error);
