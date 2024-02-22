@@ -1,22 +1,38 @@
-<div class="text-center">
-    <div class="text-start">
-        <h2 class="text-white"><strong>Your Transaction History</strong></h2>
+<div class='text-center'>
+  <div class='text-start'>
+    <h2 class='text-white'><strong>Your Transaction History</strong></h2>
 
-        {{#if transactions.length}}
-            <ul class="transactions-list text-white">
-                {{#each transactions}}
-                    <li class="transaction-item text-white">
-                        <span class="transaction-name text-white"><strong>Name:</strong> {{this.name}}</span>
-                        <span class="transaction-category text-white">{{this.category.name}}</span>
-                        <span class="transaction-description text-white">{{this.description}}</span>
-                        <span class="transaction-amount text-white">${{this.amount}}</span>
-                        <span class="transaction-date text-white">{{this.date}}</span>
-                        <!-- For the date we might need a helper to format it -->
-                    </li>
-                {{/each}}
-            </ul>
-        {{else}}
-            <p class="text-white">No Transactions found.</p>
-        {{/if}}
-    </div>
+    {{#if transactions.length}}
+      <ul class='transactions-list text-white'>
+        {{#each transactions}}
+          <li class='transaction-item text-white'>
+            <span class='transaction-name text-white'><strong>Name:</strong>
+              {{this.name}}</span>
+            <span
+              class='transaction-category text-white'
+            >{{this.category.name}}</span>
+            <span
+              class='transaction-description text-white'
+            >{{this.description}}</span>
+            <span class='transaction-amount text-white'>${{this.amount}}</span>
+            <span class='transaction-date text-white'>{{this.date}}</span>
+            <!-- For the date we might need a helper to format it -->
+            <a
+              href='/transactions/{{this.id}}/edit'
+              class='btn btn-edit btn-secondary'
+              data-transaction-id='{{this.id}}'
+            >Edit</a>
+            <button
+              class='btn btn-delete btn-danger'
+              data-transaction-id='{{this.id}}'
+            >Delete</button>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p class='text-white'>No Transactions found.</p>
+    {{/if}}
+  </div>
 </div>
+<a href='/' class='back-button'>Back to Home!</a>
+<script src='/js/deleteTransaction.js'></script>
