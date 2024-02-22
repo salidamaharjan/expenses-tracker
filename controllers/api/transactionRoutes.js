@@ -5,6 +5,7 @@ const sequelize = require('../../config/connection');
 
 // the 'api/transactions' endpoint
 
+// TODO: for all transaction getting routes, need to add handling to get from a specific time range
 //get all transactions
 router.get('/', isAuthorized, async (req, res) => {
   try {
@@ -56,10 +57,10 @@ router.get('/name-transactions', isAuthorized, async (req, res) => {
         transactionType: 'credit',
       },
       attributes: [
-        [sequelize.fn('lower', sequelize.col('name')), 'name'],
+        [sequelize.fn('upper', sequelize.col('name')), 'name'],
         [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
       ],
-      group: [sequelize.fn('lower', sequelize.col('name'))],
+      group: [sequelize.fn('upper', sequelize.col('name'))],
     });
     res.status(200).json(groupedTransactions);
   } catch (error) {
@@ -76,7 +77,10 @@ router.get('/credit-transactions', isAuthorized, async (req, res) => {
         personId: req.session.personId,
         transactionType: 'credit',
       },
-      attributes: ['name', ['amount', 'total_amount']],
+      attributes: [
+        [sequelize.fn('upper', sequelize.col('name')), 'name'],
+        ['amount', 'total_amount'],
+      ],
     });
     res.status(200).json(allTransaction);
   } catch (error) {
@@ -118,7 +122,8 @@ router.put('/options', isAuthorized, async (req, res) => {
   try {
     const updatePerson = await Person.update(
       {
-        chartOptions: req.body.chartOptions,
+        groupOptions: req.body.groupOptions,
+        timeOptions: req.body.timeOptions,
       },
       {
         where: {
@@ -178,7 +183,7 @@ router.delete('/:id', isAuthorized, async (req, res) => {
 router.get('/options', isAuthorized, async (req, res) => {
   try {
     const personOptions = await Person.findByPk(req.session.personId, {
-      attributes: ['chart_options'],
+      attributes: ['group_options', 'time_options'],
     });
     res.status(200).json(personOptions);
   } catch (error) {
