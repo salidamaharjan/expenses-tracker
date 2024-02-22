@@ -74,7 +74,7 @@ const renderChart = async (chartNumber) => {
         console.error("Error getting chart options");
         return;
     }
-    // todo: add request body that specifies the time range
+    // TODO: add request body that specifies the time range
     const response = await fetch(url);
     const groupedTransactions = await response.json();
     console.log(groupedTransactions);
@@ -109,6 +109,7 @@ const renderChart = async (chartNumber) => {
     });
 }
 
+// TODO: add javascript to handle adding elements to the list in chart.handlebars
 
 document.getElementById('group-options').addEventListener('click', groupOptions);
 document.getElementById('time-options').addEventListener('click', timeOptions);

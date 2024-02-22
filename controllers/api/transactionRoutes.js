@@ -5,7 +5,7 @@ const sequelize = require('../../config/connection');
 
 // the 'api/transactions' endpoint
 
-// for all transaction getting routes, need to add handling to get from a specific time range
+// TODO: for all transaction getting routes, need to add handling to get from a specific time range
 //get all transactions
 router.get('/', isAuthorized, async (req, res) => {
   try {
