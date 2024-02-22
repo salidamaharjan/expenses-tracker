@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
-const {Person, Transactions, Categories } = require('../../models');
+const { Person, Transactions, Categories } = require('../../models');
 const sequelize = require('../../config/connection');
 
 // the 'api/transactions' endpoint
@@ -27,7 +27,7 @@ router.get('/grouped-transactions', isAuthorized, async (req, res) => {
     const groupedTransactions = await Transactions.findAll({
       where: {
         personId: req.session.personId,
-        transactionType: "credit",
+        transactionType: 'credit',
       },
       attributes: [
         'category_id',
@@ -48,13 +48,13 @@ router.get('/grouped-transactions', isAuthorized, async (req, res) => {
   }
 });
 
-//get and group transactions by name 
+//get and group transactions by name
 router.get('/name-transactions', isAuthorized, async (req, res) => {
   try {
     const groupedTransactions = await Transactions.findAll({
       where: {
         personId: req.session.personId,
-        transactionType: "credit",
+        transactionType: 'credit',
       },
       attributes: [
         [sequelize.fn('upper', sequelize.col('name')), 'name'],
@@ -182,15 +182,14 @@ router.delete('/:id', isAuthorized, async (req, res) => {
 // get a person's chart options
 router.get('/options', isAuthorized, async (req, res) => {
   try {
-    const personOptions = await Person.findByPk(req.session.personId,
-      {attributes: ['group_options', 'time_options']},
-    );
+    const personOptions = await Person.findByPk(req.session.personId, {
+      attributes: ['group_options', 'time_options'],
+    });
     res.status(200).json(personOptions);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
-  } 
+  }
 });
-
 
 module.exports = router;
