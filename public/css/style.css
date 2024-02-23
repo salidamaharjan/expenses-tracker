@@ -5,6 +5,24 @@
 }
 
 header {
+    padding: 40px 50px;
+    background-color: #273a45;
+}
+
+a {
+    padding: 5px 15px;
+}
+
+main {
+    height: 1163px;
+    padding: 50px;
     background-color: #1e2c35;
 }
 
+.form-input {
+    margin: 10px;
+}
+
+.login-btn {
+    padding: 5px 12px;
+}
