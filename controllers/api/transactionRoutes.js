@@ -2,6 +2,7 @@ const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
 const { Person, Transactions, Categories } = require('../../models');
 const sequelize = require('../../config/connection');
+const { Op } = require('sequelize');
 
 // the 'api/transactions' endpoint
 
@@ -24,11 +25,19 @@ router.get('/', isAuthorized, async (req, res) => {
 //get group by category transaction
 router.get('/grouped-transactions', isAuthorized, async (req, res) => {
   try {
+    const whereConditions={
+      personId: req.session.personId,
+      transactionType: 'credit',
+    }
+    if(req.query.startDate&&req.query.endDate){
+      whereConditions.date = {
+        [Op.gte]: new Date(req.query.startDate),
+        [Op.lt]: new Date(req.query.endDate),
+      };
+    }
+
     const groupedTransactions = await Transactions.findAll({
-      where: {
-        personId: req.session.personId,
-        transactionType: 'credit',
-      },
+      where: whereConditions,
       attributes: [
         'category_id',
         [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
@@ -51,11 +60,18 @@ router.get('/grouped-transactions', isAuthorized, async (req, res) => {
 //get and group transactions by name
 router.get('/name-transactions', isAuthorized, async (req, res) => {
   try {
+    const whereConditions={
+      personId: req.session.personId,
+      transactionType: 'credit',
+    }
+    if(req.query.startDate&&req.query.endDate){
+      whereConditions.date = {
+        [Op.gte]: new Date(req.query.startDate),
+        [Op.lt]: new Date(req.query.endDate),
+      };
+    }
     const groupedTransactions = await Transactions.findAll({
-      where: {
-        personId: req.session.personId,
-        transactionType: 'credit',
-      },
+      where: whereConditions,
       attributes: [
         [sequelize.fn('upper', sequelize.col('name')), 'name'],
         [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
@@ -72,11 +88,18 @@ router.get('/name-transactions', isAuthorized, async (req, res) => {
 // get all credit transactions
 router.get('/credit-transactions', isAuthorized, async (req, res) => {
   try {
+    const whereConditions={
+      personId: req.session.personId,
+      transactionType: 'credit',
+    }
+    if(req.query.startDate&&req.query.endDate){
+      whereConditions.date = {
+        [Op.gte]: new Date(req.query.startDate),
+        [Op.lt]: new Date(req.query.endDate),
+      };
+    }
     const allTransaction = await Transactions.findAll({
-      where: {
-        personId: req.session.personId,
-        transactionType: 'credit',
-      },
+      where: whereConditions,
       attributes: [
         [sequelize.fn('upper', sequelize.col('name')), 'name'],
         ['amount', 'total_amount'],
