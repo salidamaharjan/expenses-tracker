@@ -154,7 +154,7 @@ router.get('/time-categories', isAuthorized, async (req, res) => {
 router.get('/time-names', isAuthorized, async (req, res) => {
   try {
     const date = new Date();
-    const dateYearBefore = new Date(date.getFullYear(), date.getMonth() - 11);
+    const dateYearBefore = new Date(date.getFullYear(), date.getMonth() - 12);
 
     const groupedTransactions = await Transactions.findAll({
       where: {
