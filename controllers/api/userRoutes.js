@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.personId = newPerson.id;
+      req.session.username = newPerson.username;
       console.log('personId in session', req.session.personId);
       res.json(newPerson);
     });
@@ -46,10 +47,11 @@ router.post('/login', async (req, res) => {
         .status(400)
         .json({ message: 'Incorrect username or password. Please try again.' });
     }
-console.log(personLoggingIn.id);
+    console.log(personLoggingIn.id);
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.personId = personLoggingIn.id;
+      req.session.username = personLoggingIn.username;
       res.json({ user: personLoggingIn, message: 'You are now logged in.' });
     });
   } catch (error) {

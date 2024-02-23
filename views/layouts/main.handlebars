@@ -39,7 +39,9 @@
         <div
           class='col col-12 col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end align-items-center'
         >
-          <nav class='d-flex flex-column flex-md-row'>
+          <nav
+            class='d-flex flex-column flex-md-row align-items-md-center me-4'
+          >
             {{#if loggedIn}}
               <a
                 class='btn fs-5 text-decoration-none text-white'
@@ -51,10 +53,25 @@
                 id='view'
                 href='/transactions'
               >View Transaction</a>
-              <button
-                class='btn fs-5 text-decoration-none text-white'
-                id='logout'
-              >Logout</button>
+              <div class='dropdown d-flex justify-content-center'>
+                <button
+                  class='btn btn-light btn-sm dropdown-toggle fs-6'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
+                >
+                  🙏 Hello!
+                  {{username}}
+                </button>
+                <ul class='dropdown-menu'>
+                  <li>
+                    <button
+                      class='btn dropdown-item fs-5 text-decoration-none'
+                      id='logout'
+                    >Logout</button>
+                  </li>
+                </ul>
+              </div>
             {{else}}
               <a
                 href='/login'

@@ -9,6 +9,7 @@ router.get('/', withAuth, async (req, res) => {
   try {
     res.render('homepage', {
       loggedIn: req.session.loggedIn,
+      username: req.session.username,
     });
   } catch (error) {
     console.log(error);
@@ -43,6 +44,7 @@ router.get('/transactions', withAuth, async (req, res) => {
     res.render('transactions', {
       transactions,
       loggedIn: req.session.loggedIn,
+      username: req.session.username,
     });
   } catch (error) {
     console.log(error);
