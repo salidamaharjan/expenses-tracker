@@ -176,6 +176,7 @@ async function renderChart(chartNumber) {
           }
         },
       },
+      // https://stackoverflow.com/a/41870115
       onClick: async function (evt, item, legend) {
         // console.log('item= ', item);
         // console.log('legend=', legend);
