@@ -1,39 +1,3 @@
-<<<<<<< HEAD
-<div class='text-center'>
-  <div class='text-start'>
-    <h2 class='text-white'><strong>Your Transaction History</strong></h2>
-
-    {{#if transactions.length}}
-      <ul class='transactions-list text-white'>
-        {{#each transactions}}
-          <li class='transaction-item text-white'>
-            <span class='transaction-name text-white'><strong>Name:</strong>
-              {{this.name}}</span>
-            <span
-              class='transaction-category text-white'
-            >{{this.category.name}}</span>
-            <span
-              class='transaction-description text-white'
-            >{{this.description}}</span>
-            <span class='transaction-amount text-white'>${{this.amount}}</span>
-            <span class='transaction-date text-white'>{{this.date}}</span>
-            <!-- For the date we might need a helper to format it -->
-            <a
-              href='/transactions/{{this.id}}/edit'
-              class='btn btn-edit btn-secondary ms-2'
-              data-transaction-id='{{this.id}}'
-            >Edit</a>
-            <button
-              class='btn btn-delete btn-danger ms-2'
-              data-transaction-id='{{this.id}}'
-            >Delete</button>
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <p class='text-white'>No Transactions found.</p>
-    {{/if}}
-=======
 <div class='container'>
   <div class='text-center'>
     <div class='text-start'>
@@ -99,7 +63,6 @@
         </tbody>
       </table>
     </div>
->>>>>>> 3325bbe69a87a43fa7932fe71434e94d37c0860d
   </div>
 </div>
 <script src='/js/deleteTransaction.js'></script>
