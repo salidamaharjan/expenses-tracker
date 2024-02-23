@@ -16,37 +16,44 @@ const getOptions = async () => {
 };
 
 const makeLineChart = async (event) => {
-  const points = chartList[0].getElementsAtEventForMode(event, 'nearest', {intersect: true}, true);
-  if (points.length){
+  const points = chartList[0].getElementsAtEventForMode(
+    event,
+    'nearest',
+    { intersect: true },
+    true
+  );
+  if (points.length) {
     const chartSection = chartList[0].data.labels[points[0].index];
     let response;
-    if(groupOption=='categories'){
+    if (groupOption == 'categories') {
       let categoryId;
-      switch (chartSection){
+      switch (chartSection) {
         case 'Food':
-          categoryId=1;
+          categoryId = 1;
           break;
         case 'Housing & Utilities':
-          categoryId=2;
+          categoryId = 2;
           break;
         case 'Transportation':
-          categoryId=3;
+          categoryId = 3;
           break;
         case 'Clothing':
-          categoryId=4;
+          categoryId = 4;
           break;
         case 'Other':
-          categoryId=5;
+          categoryId = 5;
           break;
         default:
           return;
       }
-      response = await fetch('api/transactions/time-categories?categoryId='+categoryId);
-    } else if(groupOption=='names'){
+      response = await fetch(
+        'api/transactions/time-categories?categoryId=' + categoryId
+      );
+    } else if (groupOption == 'names') {
       console.log('names');
       const name = chartList[0].data.labels[points[0].index];
       console.log(name);
-      response = await fetch('api/transactions/time-names?name='+name);
+      response = await fetch('api/transactions/time-names?name=' + name);
     } else {
       return;
     }
@@ -54,7 +61,7 @@ const makeLineChart = async (event) => {
     // an array of objects, looks like this: [{month: 1, total_amount: 40}, ...]
     console.log(timedTransactions);
   }
-}
+};
 
 const groupOptions = async (event) => {
   if (event.target && event.target.matches("input[type='radio']")) {
@@ -206,7 +213,7 @@ async function renderChart(chartNumber) {
         console.log('selectedSegment', selectedSegment);
         console.log('totalAmount', transactionAmounts[index]);
         const ctx = document.getElementById('lineChart');
-        
+
         new Chart(ctx, {
           type: 'line',
           data: {
@@ -234,7 +241,7 @@ document
   .addEventListener('click', groupOptions);
 document.getElementById('time-options').addEventListener('click', timeOptions);
 
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener('DOMContentLoaded', (event) => {
   const el = document.getElementById('myChart0');
   if (el) {
     el.addEventListener('click', makeLineChart);
