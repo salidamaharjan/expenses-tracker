@@ -15,54 +15,6 @@ const getOptions = async () => {
     .setAttribute('checked', 'checked');
 };
 
-const makeLineChart = async (event) => {
-  const points = chartList[0].getElementsAtEventForMode(
-    event,
-    'nearest',
-    { intersect: true },
-    true
-  );
-  if (points.length) {
-    const chartSection = chartList[0].data.labels[points[0].index];
-    let response;
-    if (groupOption == 'categories') {
-      let categoryId;
-      switch (chartSection) {
-        case 'Food':
-          categoryId = 1;
-          break;
-        case 'Housing & Utilities':
-          categoryId = 2;
-          break;
-        case 'Transportation':
-          categoryId = 3;
-          break;
-        case 'Clothing':
-          categoryId = 4;
-          break;
-        case 'Other':
-          categoryId = 5;
-          break;
-        default:
-          return;
-      }
-      response = await fetch(
-        'api/transactions/time-categories?categoryId=' + categoryId
-      );
-    } else if (groupOption == 'names') {
-      console.log('names');
-      const name = chartList[0].data.labels[points[0].index];
-      console.log(name);
-      response = await fetch('api/transactions/time-names?name=' + name);
-    } else {
-      return;
-    }
-    const timedTransactions = await response.json();
-    // an array of objects, looks like this: [{month: 1, total_amount: 40}, ...]
-    console.log(timedTransactions);
-  }
-};
-
 const groupOptions = async (event) => {
   if (event.target && event.target.matches("input[type='radio']")) {
     if (!(event.target.id == 'group-options-' + groupOption)) {
@@ -204,7 +156,7 @@ async function renderChart(chartNumber) {
       maintainAspectRatio: true,
     },
     options: {
-      onClick: function (evt, item, legend) {
+      onClick: async function (evt, item, legend) {
         // console.log('item= ', item);
         // console.log('legend=', legend);
         const index = item[0].index;
@@ -212,16 +164,63 @@ async function renderChart(chartNumber) {
         const selectedSegment = categoryNames[index];
         console.log('selectedSegment', selectedSegment);
         console.log('totalAmount', transactionAmounts[index]);
-        const ctx = document.getElementById('lineChart');
 
-        new Chart(ctx, {
+        let response;
+        if (groupOption === 'categories') {
+          response = await fetch(
+            'api/transactions/time-categories?name=' +
+              encodeURIComponent(selectedSegment)
+          );
+        } else {
+          response = await fetch(
+            'api/transactions/time-names?name=' +
+              encodeURIComponent(selectedSegment)
+          );
+        }
+        const timeData = await response.json();
+        const months = timeData
+          .map((item) => item.month)
+          .map((monthNumber) => {
+            switch (monthNumber) {
+              case 1:
+                return 'Jan';
+              case 2:
+                return 'Feb';
+              case 3:
+                return 'Mar';
+              case 4:
+                return 'Apr';
+              case 5:
+                return 'May';
+              case 6:
+                return 'Jun';
+              case 7:
+                return 'Jul';
+              case 8:
+                return 'Aug';
+              case 9:
+                return 'Sept';
+              case 10:
+                return 'Oct';
+              case 11:
+                return 'Nov';
+              case 12:
+                return 'Dec';
+              default:
+                return 'N/A';
+            }
+          });
+        const amounts = timeData.map((item) => item.total_amount);
+
+        const ctx = document.getElementById('lineChart');
+        const lineChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: months,
             datasets: [
               {
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Expenses per month',
+                data: amounts,
                 borderWidth: 1,
               },
             ],
@@ -229,6 +228,10 @@ async function renderChart(chartNumber) {
         });
         const lineChartModal = new bootstrap.Modal('#lineChartModal', {});
         lineChartModal.show();
+        const myModal = document.getElementById('lineChartModal');
+        myModal.addEventListener('hidden.bs.modal', () => {
+          lineChart.destroy();
+        });
       },
     },
   });
@@ -240,10 +243,3 @@ document
   .getElementById('group-options')
   .addEventListener('click', groupOptions);
 document.getElementById('time-options').addEventListener('click', timeOptions);
-
-window.addEventListener('DOMContentLoaded', (event) => {
-  const el = document.getElementById('myChart0');
-  if (el) {
-    el.addEventListener('click', makeLineChart);
-  }
-});

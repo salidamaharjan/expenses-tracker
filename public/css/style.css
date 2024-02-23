@@ -13,12 +13,6 @@ a {
     padding: 5px 15px;
 }
 
-main {
-    height: 1163px;
-    padding: 50px;
-    background-color: #1e2c35;
-}
-
 .form-input {
     margin: 10px;
 }
@@ -27,16 +21,7 @@ main {
     padding: 5px 12px;
 }
 
-h2 {
-    color: white;
-}
-
-.options-color {
-    color: white;
-}
 .chart-container {
-    width: 75%;
-    height:auto;
     position: relative;
     margin: 0 auto;
 }
