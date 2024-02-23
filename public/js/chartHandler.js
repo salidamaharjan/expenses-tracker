@@ -86,24 +86,44 @@ async function renderChart(chartNumber) {
       //empty fields are given lowest value, so should be midnight for these days
       //automatically handles underflows/overflows to next month
       //last Sunday
-      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-dayOfWeek);
+      startDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - dayOfWeek
+      );
       //very start of next Sunday
-      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      endDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7 - dayOfWeek
+      );
       break;
     case 'biweekly':
-      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-7-dayOfWeek);
-      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      startDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - 7 - dayOfWeek
+      );
+      endDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7 - dayOfWeek
+      );
       break;
     case 'monthly':
       // day defaults to the first of the month if not set
       startDate = new Date(date.getFullYear(), date.getMonth());
-      endDate = new Date(date.getFullYear(), date.getMonth()+1);
+      endDate = new Date(date.getFullYear(), date.getMonth() + 1);
       break;
     default:
       console.error('Error getting time options.');
       return;
   }
-  url+="?startDate="+startDate.toDateString()+"&endDate="+endDate.toDateString();
+  url +=
+    '?startDate=' +
+    startDate.toDateString() +
+    '&endDate=' +
+    endDate.toDateString();
   const response = await fetch(url);
   const groupedTransactions = await response.json();
   let categoryNames;
@@ -119,16 +139,15 @@ async function renderChart(chartNumber) {
   );
   console.log(categoryNames);
   console.log(transactionAmounts);
-  const labels = categoryNames;
-  const data = transactionAmounts;
+
   chartList[chartNumber] = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: labels,
+      labels: categoryNames,
       datasets: [
         {
           label: 'Total Expenses',
-          data: data,
+          data: transactionAmounts,
           borderWidth: 1,
         },
       ],
@@ -144,10 +163,27 @@ async function renderChart(chartNumber) {
         // console.log('legend=', legend);
         const index = item[0].index;
         // console.log(index);
-        const selectedSegment = labels[index];
+        const selectedSegment = categoryNames[index];
         console.log('selectedSegment', selectedSegment);
-        console.log('totalAmount', data[index]);
-        window.location.replace('/lineGraph');
+        console.log('totalAmount', transactionAmounts[index]);
+
+        const ctx = document.getElementById('lineChart');
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [
+              {
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1,
+              },
+            ],
+          },
+        });
+        const lineChartModal = new bootstrap.Modal('#lineChartModal', {});
+        lineChartModal.show();
       },
     },
   });
