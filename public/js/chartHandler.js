@@ -15,6 +15,47 @@ const getOptions = async () => {
     .setAttribute('checked', 'checked');
 };
 
+const makeLineChart = async (event) => {
+  const points = chartList[0].getElementsAtEventForMode(event, 'nearest', {intersect: true}, true);
+  if (points.length){
+    const chartSection = chartList[0].data.labels[points[0].index];
+    let response;
+    if(groupOption=='categories'){
+      let categoryId;
+      switch (chartSection){
+        case 'Food':
+          categoryId=1;
+          break;
+        case 'Housing & Utilities':
+          categoryId=2;
+          break;
+        case 'Transportation':
+          categoryId=3;
+          break;
+        case 'Clothing':
+          categoryId=4;
+          break;
+        case 'Other':
+          categoryId=5;
+          break;
+        default:
+          return;
+      }
+      response = await fetch('api/transactions/time-categories?categoryId='+categoryId);
+    } else if(groupOption=='names'){
+      console.log('names');
+      const name = chartList[0].data.labels[points[0].index];
+      console.log(name);
+      response = await fetch('api/transactions/time-names?name='+name);
+    } else {
+      return;
+    }
+    const timedTransactions = await response.json();
+    // an array of objects, looks like this: [{month: 1, total_amount: 40}, ...]
+    console.log(timedTransactions);
+  }
+}
+
 const groupOptions = async (event) => {
   if (event.target && event.target.matches("input[type='radio']")) {
     if (!(event.target.id == 'group-options-' + groupOption)) {
@@ -77,7 +118,6 @@ async function renderChart(chartNumber) {
       console.error('Error getting chart options');
       return;
   }
-  // TODO: add request body that specifies the time range
   const date = new Date();
   const dayOfWeek = date.getDay();
   let startDate, endDate;
@@ -153,6 +193,10 @@ async function renderChart(chartNumber) {
       ],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: true,
+    },
+    options: {
       onClick: function (evt, item, legend) {
         // console.log('item= ', item);
         // console.log('legend=', legend);
@@ -189,3 +233,10 @@ document
   .getElementById('group-options')
   .addEventListener('click', groupOptions);
 document.getElementById('time-options').addEventListener('click', timeOptions);
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  const el = document.getElementById('myChart0');
+  if (el) {
+    el.addEventListener('click', makeLineChart);
+  }
+});

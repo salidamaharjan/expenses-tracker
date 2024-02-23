@@ -112,6 +112,49 @@ router.get('/credit-transactions', isAuthorized, async (req, res) => {
   }
 });
 
+//get credit transactions in a specfic category over time
+router.get('/time-categories', isAuthorized, async (req, res) => {
+  try {
+    const groupedTransactions = await Transactions.findAll({
+      where: {
+        personId: req.session.personId,
+        transactionType: 'credit',
+        categoryId: req.query.categoryId,
+      },
+      attributes: [
+        [sequelize.fn("MONTH", sequelize.col("date")), "month"],
+        [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
+      ],
+      group: ['month'],
+    });
+    res.status(200).json(groupedTransactions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+//get credit transactions in a specfic name over time
+router.get('/time-names', isAuthorized, async (req, res) => {
+  try {
+    const groupedTransactions = await Transactions.findAll({
+      where: {
+        personId: req.session.personId,
+        transactionType: 'credit',
+        name: req.query.name,
+      },
+      attributes: [
+        [sequelize.fn("MONTH", sequelize.col("date")), "month"],
+        [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
+      ],
+      group: ['month'],
+    });
+    res.status(200).json(groupedTransactions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 // create a new transaction
 //request body should look like follow:
 // {

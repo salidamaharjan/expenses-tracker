@@ -26,3 +26,17 @@ main {
 .login-btn {
     padding: 5px 12px;
 }
+
+h2 {
+    color: white;
+}
+
+.options-color {
+    color: white;
+}
+.chart-container {
+    width: 75%;
+    height:auto;
+    position: relative;
+    margin: 0 auto;
+}
