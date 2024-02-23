@@ -78,9 +78,34 @@ async function renderChart(chartNumber) {
       return;
   }
   // TODO: add request body that specifies the time range
+  const date = new Date();
+  const dayOfWeek = date.getDay();
+  let startDate, endDate;
+  switch (timeOption) {
+    case 'weekly':
+      //empty fields are given lowest value, so should be midnight for these days
+      //automatically handles underflows/overflows to next month
+      //last Sunday
+      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-dayOfWeek);
+      //very start of next Sunday
+      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      break;
+    case 'biweekly':
+      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-7-dayOfWeek);
+      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      break;
+    case 'monthly':
+      // day defaults to the first of the month if not set
+      startDate = new Date(date.getFullYear(), date.getMonth());
+      endDate = new Date(date.getFullYear(), date.getMonth()+1);
+      break;
+    default:
+      console.error('Error getting time options.');
+      return;
+  }
+  url+="?startDate="+startDate.toDateString()+"&endDate="+endDate.toDateString();
   const response = await fetch(url);
   const groupedTransactions = await response.json();
-  console.log(groupedTransactions);
   let categoryNames;
   if (groupOption == 'categories') {
     categoryNames = groupedTransactions.map(
