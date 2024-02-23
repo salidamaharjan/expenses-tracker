@@ -153,11 +153,6 @@ async function renderChart(chartNumber) {
       ],
     },
     options: {
-      // scales: {
-      //   y: {
-      //     beginAtZero: true,
-      //   },
-      // },
       onClick: function (evt, item, legend) {
         // console.log('item= ', item);
         // console.log('legend=', legend);
@@ -166,9 +161,8 @@ async function renderChart(chartNumber) {
         const selectedSegment = categoryNames[index];
         console.log('selectedSegment', selectedSegment);
         console.log('totalAmount', transactionAmounts[index]);
-
         const ctx = document.getElementById('lineChart');
-
+        
         new Chart(ctx, {
           type: 'line',
           data: {
