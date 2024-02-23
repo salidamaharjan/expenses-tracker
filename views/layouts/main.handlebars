@@ -34,7 +34,7 @@
           <a
             href='/'
             class='back-button fs-1 fw-bold text-decoration-none text-white'
-          >Expenses Tracker</a>
+          > 💰 Expenses Tracker</a>
         </div>
         <div
           class='col col-12 col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end align-items-center'
@@ -51,11 +51,6 @@
                 id='view'
                 href='/transactions'
               >View Transaction</a>
-              {{! <a
-                class='btn fs-5 text-decoration-none text-white'
-                id='profile'
-                href='/profile'
-              >Profile</a> }}
               <button
                 class='btn fs-5 text-decoration-none text-white'
                 id='logout'
@@ -70,7 +65,7 @@
         </div>
       </div>
     </header>
-    <main class='mt-4'>
+    <main class='container-fluid mt-4'>
       {{{body}}}
     </main>
     {{#if loggedIn}}

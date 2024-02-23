@@ -15,47 +15,6 @@ const getOptions = async () => {
     .setAttribute('checked', 'checked');
 };
 
-const makeLineChart = async (event) => {
-  const points = chartList[0].getElementsAtEventForMode(event, 'nearest', {intersect: true}, true);
-  if (points.length){
-    const chartSection = chartList[0].data.labels[points[0].index];
-    let response;
-    if(groupOption=='categories'){
-      let categoryId;
-      switch (chartSection){
-        case 'Food':
-          categoryId=1;
-          break;
-        case 'Housing & Utilities':
-          categoryId=2;
-          break;
-        case 'Transportation':
-          categoryId=3;
-          break;
-        case 'Clothing':
-          categoryId=4;
-          break;
-        case 'Other':
-          categoryId=5;
-          break;
-        default:
-          return;
-      }
-      response = await fetch('api/transactions/time-categories?categoryId='+categoryId);
-    } else if(groupOption=='names'){
-      console.log('names');
-      const name = chartList[0].data.labels[points[0].index];
-      console.log(name);
-      response = await fetch('api/transactions/time-names?name='+name);
-    } else {
-      return;
-    }
-    const timedTransactions = await response.json();
-    // an array of objects, looks like this: [{month: 1, total_amount: 40}, ...]
-    console.log(timedTransactions);
-  }
-}
-
 const groupOptions = async (event) => {
   if (event.target && event.target.matches("input[type='radio']")) {
     if (!(event.target.id == 'group-options-' + groupOption)) {
@@ -126,24 +85,44 @@ async function renderChart(chartNumber) {
       //empty fields are given lowest value, so should be midnight for these days
       //automatically handles underflows/overflows to next month
       //last Sunday
-      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-dayOfWeek);
+      startDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - dayOfWeek
+      );
       //very start of next Sunday
-      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      endDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7 - dayOfWeek
+      );
       break;
     case 'biweekly':
-      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-7-dayOfWeek);
-      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-dayOfWeek);
+      startDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - 7 - dayOfWeek
+      );
+      endDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7 - dayOfWeek
+      );
       break;
     case 'monthly':
       // day defaults to the first of the month if not set
       startDate = new Date(date.getFullYear(), date.getMonth());
-      endDate = new Date(date.getFullYear(), date.getMonth()+1);
+      endDate = new Date(date.getFullYear(), date.getMonth() + 1);
       break;
     default:
       console.error('Error getting time options.');
       return;
   }
-  url+="?startDate="+startDate.toDateString()+"&endDate="+endDate.toDateString();
+  url +=
+    '?startDate=' +
+    startDate.toDateString() +
+    '&endDate=' +
+    endDate.toDateString();
   const response = await fetch(url);
   const groupedTransactions = await response.json();
   let categoryNames;
@@ -157,6 +136,8 @@ async function renderChart(chartNumber) {
   const transactionAmounts = groupedTransactions.map(
     (transaction) => transaction.total_amount
   );
+  // console.log(categoryNames);
+  // console.log(transactionAmounts);
 
   chartList[chartNumber] = new Chart(ctx, {
     type: 'pie',
@@ -174,6 +155,81 @@ async function renderChart(chartNumber) {
       responsive: true,
       maintainAspectRatio: true,
     },
+    options: {
+      onClick: async function (evt, item, legend) {
+        // console.log('item= ', item);
+        // console.log('legend=', legend);
+        const index = item[0].index;
+        // console.log(index);
+        const selectedSegment = categoryNames[index];
+        // console.log('selectedSegment', selectedSegment);
+        // console.log('totalAmount', transactionAmounts[index]);
+
+        let response;
+        if (groupOption === 'categories') {
+          response = await fetch(
+            'api/transactions/time-categories?name=' +
+              encodeURIComponent(selectedSegment)
+          );
+        } else {
+          response = await fetch(
+            'api/transactions/time-names?name=' +
+              encodeURIComponent(selectedSegment)
+          );
+        }
+        const timeData = await response.json();
+        const months = timeData.map((item) => {
+          switch (item.month) {
+            case 1:
+              return `Jan ${item.year}`;
+            case 2:
+              return `Feb ${item.year}`;
+            case 3:
+              return `Mar ${item.year}`;
+            case 4:
+              return `Apr ${item.year}`;
+            case 5:
+              return `May ${item.year}`;
+            case 6:
+              return `Jun ${item.year}`;
+            case 7:
+              return `Jul ${item.year}`;
+            case 8:
+              return `Aug ${item.year}`;
+            case 9:
+              return `Sep ${item.year}`;
+            case 10:
+              return `Oct ${item.year}`;
+            case 11:
+              return `Nov ${item.year}`;
+            case 12:
+              return `Dec ${item.year}`;
+          }
+        });
+        const amounts = timeData.map((item) => item.total_amount);
+
+        const ctx = document.getElementById('lineChart');
+        const lineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: months,
+            datasets: [
+              {
+                label: 'Expenses per month',
+                data: amounts,
+                borderWidth: 1,
+              },
+            ],
+          },
+        });
+        const lineChartModal = new bootstrap.Modal('#lineChartModal', {});
+        lineChartModal.show();
+        const myModal = document.getElementById('lineChartModal');
+        myModal.addEventListener('hidden.bs.modal', () => {
+          lineChart.destroy();
+        });
+      },
+    },
   });
 }
 
@@ -183,10 +239,3 @@ document
   .getElementById('group-options')
   .addEventListener('click', groupOptions);
 document.getElementById('time-options').addEventListener('click', timeOptions);
-
-window.addEventListener("DOMContentLoaded", (event) => {
-  const el = document.getElementById('myChart0');
-  if (el) {
-    el.addEventListener('click', makeLineChart);
-  }
-});
