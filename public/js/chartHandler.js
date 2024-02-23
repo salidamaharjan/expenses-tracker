@@ -136,8 +136,8 @@ async function renderChart(chartNumber) {
   const transactionAmounts = groupedTransactions.map(
     (transaction) => transaction.total_amount
   );
-  console.log(categoryNames);
-  console.log(transactionAmounts);
+  // console.log(categoryNames);
+  // console.log(transactionAmounts);
 
   chartList[chartNumber] = new Chart(ctx, {
     type: 'pie',
@@ -162,8 +162,8 @@ async function renderChart(chartNumber) {
         const index = item[0].index;
         // console.log(index);
         const selectedSegment = categoryNames[index];
-        console.log('selectedSegment', selectedSegment);
-        console.log('totalAmount', transactionAmounts[index]);
+        // console.log('selectedSegment', selectedSegment);
+        // console.log('totalAmount', transactionAmounts[index]);
 
         let response;
         if (groupOption === 'categories') {
@@ -178,38 +178,34 @@ async function renderChart(chartNumber) {
           );
         }
         const timeData = await response.json();
-        const months = timeData
-          .map((item) => item.month)
-          .map((monthNumber) => {
-            switch (monthNumber) {
-              case 1:
-                return 'Jan';
-              case 2:
-                return 'Feb';
-              case 3:
-                return 'Mar';
-              case 4:
-                return 'Apr';
-              case 5:
-                return 'May';
-              case 6:
-                return 'Jun';
-              case 7:
-                return 'Jul';
-              case 8:
-                return 'Aug';
-              case 9:
-                return 'Sept';
-              case 10:
-                return 'Oct';
-              case 11:
-                return 'Nov';
-              case 12:
-                return 'Dec';
-              default:
-                return 'N/A';
-            }
-          });
+        const months = timeData.map((item) => {
+          switch (item.month) {
+            case 1:
+              return `Jan ${item.year}`;
+            case 2:
+              return `Feb ${item.year}`;
+            case 3:
+              return `Mar ${item.year}`;
+            case 4:
+              return `Apr ${item.year}`;
+            case 5:
+              return `May ${item.year}`;
+            case 6:
+              return `Jun ${item.year}`;
+            case 7:
+              return `Jul ${item.year}`;
+            case 8:
+              return `Aug ${item.year}`;
+            case 9:
+              return `Sep ${item.year}`;
+            case 10:
+              return `Oct ${item.year}`;
+            case 11:
+              return `Nov ${item.year}`;
+            case 12:
+              return `Dec ${item.year}`;
+          }
+        });
         const amounts = timeData.map((item) => item.total_amount);
 
         const ctx = document.getElementById('lineChart');

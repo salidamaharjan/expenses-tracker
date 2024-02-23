@@ -115,28 +115,34 @@ router.get('/credit-transactions', isAuthorized, async (req, res) => {
 //get credit transactions in a specfic category over time
 router.get('/time-categories', isAuthorized, async (req, res) => {
   try {
-    const category = await Categories.findOne({
-      where: {
-        name: req.query.name,
-      },
-    });
     const date = new Date();
-    const dateYearBefore = new Date(date.getFullYear(), date.getMonth() - 11);
+    const dateYearBefore = new Date(date.getFullYear(), date.getMonth() - 12);
     const groupedTransactions = await Transactions.findAll({
       where: {
         personId: req.session.personId,
         transactionType: 'credit',
-        categoryId: category.id,
         date: {
           [Op.gte]: dateYearBefore,
         },
       },
+      include: [
+        {
+          model: Categories,
+          where: {
+            name: req.query.name,
+          },
+        },
+      ],
       attributes: [
         [sequelize.fn('MONTH', sequelize.col('date')), 'month'],
+        [sequelize.fn('YEAR', sequelize.col('date')), 'year'],
         [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
       ],
-      group: ['month'],
-      order: [['month', 'asc']],
+      group: ['month', 'year'],
+      order: [
+        ['year', 'asc'],
+        ['month', 'asc'],
+      ],
     });
     res.status(200).json(groupedTransactions);
   } catch (error) {
@@ -161,10 +167,14 @@ router.get('/time-names', isAuthorized, async (req, res) => {
       },
       attributes: [
         [sequelize.fn('MONTH', sequelize.col('date')), 'month'],
+        [sequelize.fn('YEAR', sequelize.col('date')), 'year'],
         [sequelize.fn('SUM', sequelize.col('amount')), 'total_amount'],
       ],
-      group: ['month'],
-      order: [['month', 'asc']],
+      group: ['month', 'year'],
+      order: [
+        ['year', 'asc'],
+        ['month', 'asc'],
+      ],
     });
     res.status(200).json(groupedTransactions);
   } catch (error) {
