@@ -28,6 +28,14 @@ Person.init(
         len: [8, 24],
       },
     },
+    groupOptions: {
+      type: DataTypes.ENUM('categories','names','individuals'),
+      defaultValue: 'categories',
+    },
+    timeOptions: {
+      type: DataTypes.ENUM('weekly','biweekly','monthly'),
+      defaultValue: 'weekly',
+    }
   },
   {
     hooks: {

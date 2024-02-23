@@ -5,26 +5,25 @@ const withAuth = require('../utils/authorization');
 // the '' endpoint
 
 // homepage
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     res.render('homepage', {
       loggedIn: req.session.loggedIn,
     });
-  } 
-  catch (error) {
-      console.log(error);
-      res.status(500).json(error);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 });
 
 //login page
 router.get('/login', (req, res) => {
-    if (req.session.loggedIn) {
-      res.redirect('/');
-      return;
-    }
-  
-    res.render('login');
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('login');
 });
 
 // ALL transactions page
@@ -37,13 +36,15 @@ router.get('/transactions', withAuth, async (req, res) => {
       include: [{ model: Categories }],
       order: [['date', 'DESC']],
     });
-    const transactions = transactionsData.map((transaction) => transaction.get({ plain: true}));
+    const transactions = transactionsData.map((transaction) =>
+      transaction.get({ plain: true })
+    );
 
     res.render('transactions', {
       transactions,
-      loggedIn: req.session.loggedIn
+      loggedIn: req.session.loggedIn,
     });
-  } catch (error){
+  } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }

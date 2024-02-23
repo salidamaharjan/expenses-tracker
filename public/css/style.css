@@ -5,6 +5,7 @@
 }
 
 header {
+<<<<<<< HEAD
     padding: 40px 50px;
     background-color: #273a45;
 }
@@ -26,3 +27,8 @@ main {
 .login-btn {
     padding: 5px 12px;
 }
+=======
+    background-color: #1e2c35;
+}
+
+>>>>>>> 3325bbe69a87a43fa7932fe71434e94d37c0860d
