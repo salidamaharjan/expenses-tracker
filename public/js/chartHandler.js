@@ -94,18 +94,36 @@ async function renderChart(chartNumber) {
   );
   console.log(categoryNames);
   console.log(transactionAmounts);
-
+  const labels = categoryNames;
+  const data = transactionAmounts;
   chartList[chartNumber] = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: categoryNames,
+      labels: labels,
       datasets: [
         {
           label: 'Total Expenses',
-          data: transactionAmounts,
+          data: data,
           borderWidth: 1,
         },
       ],
+    },
+    options: {
+      // scales: {
+      //   y: {
+      //     beginAtZero: true,
+      //   },
+      // },
+      onClick: function (evt, item, legend) {
+        // console.log('item= ', item);
+        // console.log('legend=', legend);
+        const index = item[0].index;
+        // console.log(index);
+        const selectedSegment = labels[index];
+        console.log('selectedSegment', selectedSegment);
+        console.log('totalAmount', data[index]);
+        window.location.replace('/lineGraph');
+      },
     },
   });
 }
