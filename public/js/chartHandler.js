@@ -154,8 +154,28 @@ async function renderChart(chartNumber) {
     options: {
       responsive: true,
       maintainAspectRatio: true,
-    },
-    options: {
+      // https://www.chartjs.org/docs/latest/configuration/animations.html#animation-callbacks
+      // https://stackoverflow.com/a/55572965
+      animation: {
+        onComplete: function (animation) {
+          if (transactionAmounts.length === 0) {
+            document.getElementById('no-data').style.display = 'block';
+            document.querySelector('.myChart').style.display = 'none';
+          } else {
+            document.getElementById('no-data').style.display = 'none';
+            document.querySelector('.myChart').style.display = 'block';
+          }
+        },
+        onProgress: function (animation) {
+          if (transactionAmounts.length === 0) {
+            document.getElementById('no-data').style.display = 'block';
+            document.querySelector('.myChart').style.display = 'none';
+          } else {
+            document.getElementById('no-data').style.display = 'none';
+            document.querySelector('.myChart').style.display = 'block';
+          }
+        },
+      },
       onClick: async function (evt, item, legend) {
         // console.log('item= ', item);
         // console.log('legend=', legend);
