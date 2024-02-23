@@ -130,6 +130,10 @@ async function renderChart(chartNumber) {
         },
       ],
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+    },
   });
 }
 
