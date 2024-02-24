@@ -1,0 +1,68 @@
+<div class='container'>
+  <div class='text-center'>
+    <div class='text-start'>
+      <h2 class='text-white'><strong>Your Transaction History</strong></h2>
+      <table class='table table-responsive table-striped'>
+        <thead>
+          <tr>
+            <th scope='col'>Transaction Name</th>
+            <th scope='col'>Category Name</th>
+            <th scope='col'>Description</th>
+            <th scope='col'>Amount</th>
+            <th scope='col'>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#if transactions.length}}
+            {{#each transactions}}
+              <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.category.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.amount}}</td>
+                <td>{{this.date}}</td>
+                <td>
+                  <div class='dropdown'>
+                    <button
+                      class='btn btn-secondary dropdown-toggle'
+                      type='button'
+                      id='dropdownMenuButton'
+                      data-bs-toggle='dropdown'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      <i class='fa-solid fa-ellipsis'></i>
+                    </button>
+                    <div
+                      class='dropdown-menu'
+                      aria-labelledby='dropdownMenuButton'
+                    >
+                      <a
+                        class='dropdown-item btn btn-edit'
+                        data-transaction-id='{{this.id}}'
+                        href='/transactions/{{this.id}}/edit'
+                      >Edit</a>
+                      <a
+                        class='dropdown-item btn btn-delete'
+                        data-transaction-id='{{this.id}}'
+                      >Delete</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <td colspan='6'>
+                <p class='text-center'>No Transactions found.</p>
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script src='/js/deleteTransaction.js'></script>

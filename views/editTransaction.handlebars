@@ -1,0 +1,69 @@
+<div class='d-flex align-items-center justify-content-center'>
+  <div class='edit-transaction-card card mt-5 w-75'>
+    <div class='card-body'>
+      <h2 class='editTransaction'>Edit Transaction</h2>
+      <form class='editTransaction-form'>
+        <div class='mb-3'>
+          <label for='transactionType' class='form-label'>Select Transaction
+            Type</label>
+          <select
+            class='form-control'
+            id='transactionType'
+            aria-describedby='transactionType'
+          >
+            <option {{#if (isEqual transaction.transactionType 'Debit')}}selected{{/if}} value='Debit' id='debit'>Debit</option>
+            <option {{#if (isEqual transaction.transactionType 'Credit')}}selected{{/if}} value='Credit' id='credit'>Credit</option>
+          </select>
+        </div>
+        <div class='mb-3'>
+          <label for='transactionName' class='form-label'>Name</label>
+          <input
+            type='text'
+            class='form-control transactionName'
+            aria-describedby='transactionName'
+            value='{{transaction.name}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='description' class='form-label'>Description</label>
+          <textarea class='form-control description'>{{transaction.description}}</textarea>
+        </div>
+        <div class='mb-3'>
+          <label for='amount' class='form-label'>Amount</label>
+          <input
+            type='text'
+            class='form-control amount'
+            aria-describedby='amount'
+            value='{{transaction.amount}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='transactionDate' class='form-label'>Date</label>
+          <input
+            type='date'
+            class='form-control transactionDate'
+            aria-describedby='transactionDate'
+            value='{{transaction.date}}'
+          />
+        </div>
+        <div class='mb-3'>
+          <label for='transactionCategory' class='form-label'>Select Category</label>
+          <select
+            class='form-control transactionCategory'
+            aria-describedby='transactionCategory'
+          >
+           {{#each categories as |category|}}
+           {{!-- https://stackoverflow.com/questions/12297959/access-properties-of-the-parent-with-a-handlebars-each-loop --}}
+            <option {{#if (isEqual ../transaction.categoryId category.id) }}selected{{/if}} value="{{category.id}}">{{category.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <button
+          data-transaction-id='{{transaction.id}}'
+          class='btn btn-primary btn-update'
+        >Update</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src='/js/editTransaction.js'></script>
