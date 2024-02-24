@@ -3,7 +3,17 @@ const seedCategories = require('./categorySeeds');
 const sequelize = require('../config/connection');
 
 sequelize.sync({ force: true }).then(async () => {
-  seedCategories();
+  await seedCategories();
+
+  const foodCategory = await Categories.findOne({where: {name: 'Food'}});
+  const housingCategory = await Categories.findOne({where: {name: 'Housing & Utilities'}});
+  const entertainmentCategory = await Categories.findOne({where: {name: 'Entertainment'}});
+  const gasCategory = await Categories.findOne({where: {name: 'Gas'}});
+  const travelCategory = await Categories.findOne({where: {name: 'Travel'}});
+  const clothingCategory = await Categories.findOne({where: {name: 'Clothing'}});
+  const otherCategory = await Categories.findOne({where: {name: 'Other'}});
+
+
   await Person.create({
     username: 'abcd',
     password: 'password',
@@ -22,7 +32,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 100,
       date: new Date(2024, 1, 1),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -31,7 +41,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 120,
       date: new Date(2023, 1, 23),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -40,7 +50,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 300,
       date: new Date(2023, 1, 14),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -49,7 +59,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 90,
       date: new Date(2023, 2, 16),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -58,7 +68,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 180,
       date: new Date(2023, 2, 26),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -67,7 +77,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 30,
       date: new Date(2023, 3, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -76,7 +86,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 430,
       date: new Date(2023, 3, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -85,7 +95,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 310,
       date: new Date(2023, 4, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -94,7 +104,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 4, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -103,7 +113,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 230,
       date: new Date(2023, 5, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -112,7 +122,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 190,
       date: new Date(2023, 5, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -121,7 +131,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 100,
       date: new Date(2023, 6, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -130,7 +140,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 6, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -139,7 +149,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 350,
       date: new Date(2023, 7, 27),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -148,7 +158,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 370,
       date: new Date(2023, 7, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -157,7 +167,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 8, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -166,7 +176,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2023, 8, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -175,7 +185,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 200,
       date: new Date(2023, 9, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -184,7 +194,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2023, 9, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -193,7 +203,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 160,
       date: new Date(2023, 10, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -202,7 +212,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 200,
       date: new Date(2023, 10, 18),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -211,7 +221,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 230,
       date: new Date(2023, 11, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -220,7 +230,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 220,
       date: new Date(2023, 11, 28),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -229,7 +239,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2024, 0, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
 
@@ -239,7 +249,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 120,
       date: new Date(2023, 1, 23),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -248,7 +258,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 300,
       date: new Date(2023, 1, 14),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -257,7 +267,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 90,
       date: new Date(2023, 2, 16),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -266,7 +276,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 180,
       date: new Date(2023, 2, 26),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -275,7 +285,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 30,
       date: new Date(2023, 3, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -284,7 +294,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 430,
       date: new Date(2023, 3, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -293,7 +303,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 310,
       date: new Date(2023, 4, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -302,7 +312,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 4, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -311,7 +321,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 230,
       date: new Date(2023, 5, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -320,7 +330,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 190,
       date: new Date(2023, 5, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -329,7 +339,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 100,
       date: new Date(2023, 6, 20),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -338,7 +348,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 6, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -347,7 +357,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 350,
       date: new Date(2023, 7, 27),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -356,7 +366,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 370,
       date: new Date(2023, 7, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -365,7 +375,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 130,
       date: new Date(2023, 8, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -374,7 +384,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2023, 8, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -383,7 +393,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 200,
       date: new Date(2023, 9, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -392,7 +402,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2023, 9, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -401,7 +411,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 160,
       date: new Date(2023, 10, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -410,7 +420,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 200,
       date: new Date(2023, 10, 18),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -419,7 +429,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 230,
       date: new Date(2023, 11, 2),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -428,7 +438,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 220,
       date: new Date(2023, 11, 28),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -437,7 +447,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 170,
       date: new Date(2024, 0, 22),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -446,7 +456,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 100,
       date: new Date(2024, 1, 1),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -455,7 +465,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 120,
       date: new Date(2024, 1, 7),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -464,7 +474,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 150,
       date: new Date(2024, 1, 14),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -473,7 +483,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 200,
       date: new Date(2024, 1, 21),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
     {
@@ -482,7 +492,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Grocery',
       amount: 140,
       date: new Date(2024, 1, 23),
-      categoryId: 1,
+      categoryId: foodCategory.id,
       personId: userData.id,
     },
 
@@ -493,7 +503,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Bill',
       amount: 70,
       date: new Date(2024, 1, 23),
-      categoryId: 2,
+      categoryId: housingCategory.id,
       personId: userData.id,
     },
     {
@@ -502,7 +512,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Bill',
       amount: 80,
       date: new Date(2024, 0, 27),
-      categoryId: 2,
+      categoryId: housingCategory.id,
       personId: userData.id,
     },
 
@@ -513,7 +523,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'AMC',
       amount: 40,
       date: new Date(2024, 1, 22),
-      categoryId: 3,
+      categoryId: entertainmentCategory.id,
       personId: userData.id,
     },
 
@@ -524,7 +534,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 32,
       date: new Date(2024, 0, 20),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -533,7 +543,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 45,
       date: new Date(2024, 0, 27),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -542,7 +552,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 38,
       date: new Date(2024, 1, 7),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -551,7 +561,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 47,
       date: new Date(2024, 1, 14),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -560,7 +570,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 52,
       date: new Date(2024, 1, 23),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -569,7 +579,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 32,
       date: new Date(2023, 1, 23),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -578,7 +588,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 30,
       date: new Date(2023, 1, 14),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -587,7 +597,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 65,
       date: new Date(2023, 2, 16),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -596,7 +606,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 42,
       date: new Date(2023, 2, 26),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -605,7 +615,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 37,
       date: new Date(2023, 3, 7),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -614,7 +624,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 25,
       date: new Date(2023, 3, 20),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -623,7 +633,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 31,
       date: new Date(2023, 4, 7),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -632,7 +642,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 30,
       date: new Date(2023, 4, 20),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -641,7 +651,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 28,
       date: new Date(2023, 5, 20),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -650,7 +660,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 32,
       date: new Date(2023, 5, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -659,7 +669,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 28,
       date: new Date(2023, 6, 20),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -668,7 +678,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 34,
       date: new Date(2023, 6, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -677,7 +687,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 35,
       date: new Date(2023, 7, 27),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -686,7 +696,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 37,
       date: new Date(2023, 7, 7),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -695,7 +705,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 28,
       date: new Date(2023, 8, 22),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -704,7 +714,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 40,
       date: new Date(2023, 8, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -713,7 +723,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 26,
       date: new Date(2023, 9, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -722,7 +732,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 37,
       date: new Date(2023, 9, 22),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -731,7 +741,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 16,
       date: new Date(2023, 10, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -740,7 +750,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 20,
       date: new Date(2023, 10, 18),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -749,7 +759,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 23,
       date: new Date(2023, 11, 2),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -758,7 +768,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 32,
       date: new Date(2023, 11, 28),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
     {
@@ -767,7 +777,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Gas',
       amount: 27,
       date: new Date(2024, 0, 22),
-      categoryId: 4,
+      categoryId: gasCategory.id,
       personId: userData.id,
     },
 
@@ -778,7 +788,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Vacation',
       amount: 250,
       date: new Date(2024, 1, 22),
-      categoryId: 5,
+      categoryId: travelCategory.id,
       personId: userData.id,
     },
     {
@@ -787,7 +797,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Vacation',
       amount: 370,
       date: new Date(2024, 1, 22),
-      categoryId: 5,
+      categoryId: travelCategory.id,
       personId: userData.id,
     },
 
@@ -798,7 +808,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Jacket',
       amount: 270,
       date: new Date(2024, 1, 22),
-      categoryId: 7,
+      categoryId: clothingCategory.id,
       personId: userData.id,
     },
     {
@@ -807,7 +817,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Dress',
       amount: 390,
       date: new Date(2024, 1, 20),
-      categoryId: 7,
+      categoryId: clothingCategory.id,
       personId: userData.id,
     },
     {
@@ -816,7 +826,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'T-shirt',
       amount: 140,
       date: new Date(2024, 0, 23),
-      categoryId: 7,
+      categoryId: clothingCategory.id,
       personId: userData.id,
     },
     {
@@ -825,7 +835,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Jeans',
       amount: 230,
       date: new Date(2024, 1, 7),
-      categoryId: 7,
+      categoryId: clothingCategory.id,
       personId: userData.id,
     },
 
@@ -836,7 +846,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Membership fee',
       amount: 85,
       date: new Date(2024, 1, 21),
-      categoryId: 8,
+      categoryId: otherCategory.id,
       personId: userData.id,
     },
     {
@@ -845,7 +855,7 @@ sequelize.sync({ force: true }).then(async () => {
       description: 'Active wear',
       amount: 165,
       date: new Date(2024, 1, 22),
-      categoryId: 8,
+      categoryId: otherCategory.id,
       personId: userData.id,
     },
   ];
