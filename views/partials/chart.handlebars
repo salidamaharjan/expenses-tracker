@@ -1,14 +1,16 @@
 {{!-- need to pass an index to this partial--}}
 <div class="chart-container">
     <canvas class="mt-4 myChart" id='myChart{{chartNumber}}'></canvas>
-    <h2 class="mt-4 text-center" id="no-data">No transactions found</h2>
+    <h2 class="mt-4 text-center" id="no-data" style="display: none">No transactions found</h2>
 </div>
-<h3 class="chart-heading" id="chart-heading-{{chartNumber}}">Transactions:</h2>
+
+
+<h3 class="chart-heading text-center mt-4" id="chart-heading-{{chartNumber}}">Transactions</h2>
 <div class="row chart-transaction-list" id="chart-list-{{chartNumber}}">
-    <div class="col" id="names-{{chartNumber}}"></div>
+    <div class="col text-end" id="names-{{chartNumber}}"></div>
     <div class="col" id="amounts-{{chartNumber}}"></div>
 </div>
 <div class="row chart-transaction-list" id="chart-totals-{{chartNumber}}">
-    <div class="col">Total:</div>
+    <div class="col text-end">Total:</div>
     <div class="col" id="total-amount-{{chartNumber}}"></div>
 </div>
