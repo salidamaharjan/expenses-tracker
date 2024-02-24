@@ -4,4 +4,11 @@
     <h2 class="mt-4 text-center" id="no-data">No transactions found</h2>
 </div>
 <h3 class="chart-heading" id="chart-heading-{{chartNumber}}">Transactions:</h2>
-<ul class="'chart-transaction-list" id="chart-list-{{chartNumber}}"></ul>
+<div class="row chart-transaction-list" id="chart-list-{{chartNumber}}">
+    <div class="col" id="names-{{chartNumber}}"></div>
+    <div class="col" id="amounts-{{chartNumber}}"></div>
+</div>
+<div class="row chart-transaction-list" id="chart-totals-{{chartNumber}}">
+    <div class="col">Total:</div>
+    <div class="col" id="total-amount-{{chartNumber}}"></div>
+</div>
