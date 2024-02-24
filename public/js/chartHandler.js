@@ -138,7 +138,11 @@ async function renderChart(chartNumber) {
   );
   // console.log(categoryNames);
   // console.log(transactionAmounts);
-
+  const debitUrl = '/api/transactions/debit-transactions?startDate=' +
+    startDate.toDateString() + '&endDate=' + endDate.toDateString();
+  const debitResponse = await fetch(debitUrl);
+  const debitTransactions = await debitResponse.json();
+  displayTransactions(chartNumber, categoryNames, transactionAmounts, debitTransactions);
   chartList[chartNumber] = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -254,7 +258,43 @@ async function renderChart(chartNumber) {
   });
 }
 
-// TODO: add javascript to handle adding elements to the list in chart.handlebars
+function displayTransactions(chartNumber, categoryNames, transactionAmounts, debitTransactions){
+  console.log(debitTransactions);
+  const transactionListEl = document.getElementById("chart-list-"+chartNumber);
+  transactionListEl.children[0].innerText="";
+  transactionListEl.children[1].innerText="";
+  const transactionTotalEl = document.getElementById("chart-totals-"+chartNumber);
+  console.log(transactionTotalEl);
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  if(categoryNames.length==0&&debitTransactions.length==0){
+    transactionTotalEl.children[0].innerText = "No Transactions to Display";
+    return;
+  }
+  let runningTotal=0;
+  for (let i=0; i<categoryNames.length; i++){
+    let nameEl=document.createElement('div');
+    nameEl.innerText=categoryNames[i];
+    transactionListEl.children[0].appendChild(nameEl);
+    let amountEl=document.createElement('div');
+    amountEl.innerText="-"+formatter.format(transactionAmounts[i]);
+    runningTotal-=transactionAmounts[i];
+    transactionListEl.children[1].appendChild(amountEl);
+  }
+  if(debitTransactions.length>0){
+    let debitNameEl=document.createElement('div');
+    debitNameEl.innerText="Debit Total";
+    transactionListEl.children[0].appendChild(debitNameEl);
+    let debitTotalEl=document.createElement('div');
+    const debitTotal=debitTransactions.reduce(function (accumulator, currentObject){return accumulator+currentObject.total_amount}, 0);
+    debitTotalEl.innerHTML="+"+formatter.format(debitTotal);
+    runningTotal+=debitTotal;
+    transactionListEl.children[1].appendChild(debitTotalEl);
+  }
+  transactionTotalEl.children[1].innerText = formatter.format(runningTotal);
+}
 
 document
   .getElementById('group-options')

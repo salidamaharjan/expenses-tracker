@@ -112,6 +112,33 @@ router.get('/credit-transactions', isAuthorized, async (req, res) => {
   }
 });
 
+// get all debit transactions
+router.get('/debit-transactions', isAuthorized, async (req, res) => {
+  try {
+    const whereConditions = {
+      personId: req.session.personId,
+      transactionType: 'debit',
+    };
+    if (req.query.startDate && req.query.endDate) {
+      whereConditions.date = {
+        [Op.gte]: new Date(req.query.startDate),
+        [Op.lt]: new Date(req.query.endDate),
+      };
+    }
+    const allTransaction = await Transactions.findAll({
+      where: whereConditions,
+      attributes: [
+        [sequelize.fn('upper', sequelize.col('name')), 'name'],
+        ['amount', 'total_amount'],
+      ],
+    });
+    res.status(200).json(allTransaction);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 //get credit transactions in a specfic category over time
 router.get('/time-categories', isAuthorized, async (req, res) => {
   try {
