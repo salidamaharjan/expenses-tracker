@@ -12,9 +12,13 @@ This project is a full-stack application built with JavaScript, Handlebars.js, a
 - [License](#license)
 
 ## Images/Links/Videos
-![alt text](./assets/loginpage-example.png)
-![alt text](./assets/piechart-example.png)
-![alt text](./assets/alltransaction-example.png)
+[Click here for a link to our deployed website!](https://team5-expenses-tracker-b5aadd239530.herokuapp.com/)
+![login](assets/login.png)
+![add transaction](assets/new-transaction.png)
+![view all transactions](assets/view-all-transaction.png)
+![homepage with piechart](assets/homepage.png)
+![transaction total](assets/transactions-homepage.png)
+
 
 ## Usage
 To use this application you need to click on the link to the website, then log in or sign up for our website. Once you are in, it should take you to the homepage and in the nav bar there will be an add transaction input. Click on it and you will then need to look at your banking info and input all the transactions for the week, whether it is money coming in or money going out. You must put in a transaction type, transaction name, category, description, amount, and a date for each transaction. Once you have input all transactions for the week click on the expenses tracker in the nav bar then you will see a pie chart with those categories and what percent of your money you spent on each category. There is also a place for you to look at all transactions you have put in, or edit/delete transactions if needed!
